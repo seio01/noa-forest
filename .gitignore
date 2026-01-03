@@ -1,4 +1,6 @@
-# Unity generated
+# =========================
+# Unity generated folders
+# =========================
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -6,12 +8,73 @@
 [Bb]uilds/
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
-MemoryCaptures/
+[Bb]inary/
+[Mm]emoryCaptures/
+[Rr]ecordings/
 
-# OS files
+# =========================
+# IDE / OS junk
+# =========================
+.vs/
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
 
-# IDE
-.vscode/
-.idea/
+# =========================
+# JetBrains Rider
+# =========================
+[Aa]ssets/Plugins/Editor/JetBrains*
+
+# =========================
+# Gradle / Android
+# =========================
+.gradle/
+*/il2cppOutput/
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Firebase Android local dependency cache (❗중요)
+Assets/ExternalDependencyManager/
+Assets/Editor/m2repository/
+
+# =========================
+# Unity project files
+# =========================
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# =========================
+# Native Android libs (Firebase auto)
+# =========================
+*.aar
+*.aar.meta
+*.jar
+*.jar.meta
+
+# =========================
+# Crash / Reports
+# =========================
+sysinfo.txt
+crashlytics-build.properties
+
+# =========================
+# Addressables temp
+# =========================
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+[Aa]ssets/[Ss]treamingAssets/aa.meta
+[Aa]ssets/[Ss]treamingAssets/aa/*
