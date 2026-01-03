@@ -36,9 +36,10 @@ Thumbs.db
 *.unitypackage
 *.app
 
-# Firebase Android local dependency cache (❗중요)
+# Firebase Android local dependency cache
 Assets/ExternalDependencyManager/
 Assets/Editor/m2repository/
+Assets/Firebase/m2repository/
 
 # =========================
 # Unity project files
