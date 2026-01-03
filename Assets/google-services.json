@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715623009344",
+    "project_id": "noaforest-ae2b9",
+    "storage_bucket": "noaforest-ae2b9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715623009344:android:6502019ac9e412f36be3a5",
+        "android_client_info": {
+          "package_name": "com.seio.noaforest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYff39RqsTf8mZVflmxVNDAI_0u-95JLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
