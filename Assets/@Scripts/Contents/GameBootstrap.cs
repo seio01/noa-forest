@@ -1,0 +1,11 @@
+using System;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+
+
+public class GameBootstrap : MonoBehaviour
+{
+    [SerializeField] private Slider sliderLoading;
+    
+}
