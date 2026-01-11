@@ -40,6 +40,13 @@ Thumbs.db
 Assets/ExternalDependencyManager/
 Assets/Editor/m2repository/
 Assets/Firebase/m2repository/
+Assets/Firebase/m2repository.meta
+Assets/ExternalDependencyManager/Editor/m2repository/
+Assets/ExternalDependencyManager/Editor/m2repository.meta
+
+# EDM4U generated local repo
+Assets/GeneratedLocalRepo/
+Assets/GeneratedLocalRepo.meta
 
 # =========================
 # Unity project files
