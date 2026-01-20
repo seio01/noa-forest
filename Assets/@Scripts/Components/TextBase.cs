@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TextBase : SerializedMonoBehaviour
 {
-    [SerializeField] private SerializedDictionary<Define.TextColorPalette, Material> mainOutlineMaterialMap;
-    [SerializeField] private SerializedDictionary<Define.TextColorPalette, Material> subOutlineMaterialMap;
-    [SerializeField] private SerializedDictionary<Define.TextFont, TMP_FontAsset> fontAssetMap;
-    [SerializeField] private SerializedDictionary<Define.TextColorPalette, Color> colorMap;
+    [OdinSerialize, SerializeField] private Dictionary<Define.TextColorPalette, Material> mainOutlineMaterialMap;
+    [OdinSerialize, SerializeField] private Dictionary<Define.TextColorPalette, Material> subOutlineMaterialMap;
+    [OdinSerialize, SerializeField] private Dictionary<Define.TextFont, TMP_FontAsset> fontAssetMap;
+    [OdinSerialize, SerializeField] private Dictionary<Define.TextColorPalette, Color> colorMap;
     [Tooltip("원하는 스타일을 적용해주세요.")] 
     [SerializeField] private Define.TextFont textFont = Define.TextFont.Main;
     [SerializeField] private Define.TextColorPalette textColor = Define.TextColorPalette.Brown1;
@@ -105,7 +105,7 @@ public class TextBase : SerializedMonoBehaviour
         }
     }
 
-    private void SetTextMaterial(SerializedDictionary<Define.TextColorPalette, Material> materialMap, Define.TextColorPalette key)
+    private void SetTextMaterial(Dictionary<Define.TextColorPalette, Material> materialMap, Define.TextColorPalette key)
     {
         if(materialMap == null)
             return;
