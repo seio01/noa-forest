@@ -1,12 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 public class Managers : MonoBehaviour
 {
     #region core
+    private readonly CoroutineManager _coroutine = new CoroutineManager();
+    private readonly UIManager _ui = new UIManager();
+    public static UIManager UI => Instance._ui;
+    public static CoroutineManager Coroutine => Instance._coroutine;
 
     
 
@@ -19,26 +20,13 @@ public class Managers : MonoBehaviour
     #endregion
     
     private static Managers _instance;
-    public static bool IsInit = false;
     public static Managers Instance
     {
         get
         {
-            if (IsInit == false)
+            if(_instance == null)
             {
-                IsInit = true;
-                if (_instance == null)
-                {
-                    GameObject go = GameObject.Find("@Managers");
-                    if (go == null)
-                    {
-                        go = new GameObject { name = "@Managers" };
-                        go.AddComponent<Managers>();
-                    }
-                    DontDestroyOnLoad(go);
-                    _instance = go.GetComponent<Managers>();
-                }
-                InitForce();
+                Init();
             }
             return _instance;
         }
@@ -47,29 +35,27 @@ public class Managers : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void Init()
     {
-        if (IsInit == false)
+        if(_instance != null) return;
+
+        GameObject go = GameObject.Find("@Managers");
+        if (go == null)
         {
-            IsInit = true;
-            if (Instance == null)
-            {
-                GameObject go = GameObject.Find("@Managers");
-                if (go == null)
-                {
-                    go = new GameObject { name = "@Managers" };
-                    go.AddComponent<Managers>();
-                }
-
-                DontDestroyOnLoad(go);
-                _instance = go.GetComponent<Managers>();
-            }
-
-            InitForce();
+            go = new GameObject { name = "@Managers" };
         }
+        _instance = go.GetComponent<Managers>();
+        if(_instance == null)
+        {
+            _instance = go.AddComponent<Managers>();
+        }
+
+        DontDestroyOnLoad(go);
+        InitForce();
     }
     
     private static void InitForce()
     {
         //Managers Init
+        _instance._ui.Init();
     }
 
     private DateTime _lastPauseTime = DateTime.MinValue;

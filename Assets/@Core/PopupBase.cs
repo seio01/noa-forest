@@ -12,7 +12,7 @@ public class PopupBase : UI_Base
     [SerializeField] protected bool enableAnimation = true;
     [SerializeField] protected bool enableBackgroundClick = true;
     [SerializeField] protected bool allowDuplicatePopup = false;
-
+    [HideInInspector] public string PopupKey;
     private GraphicRaycaster _raycaster;
     private Sequence _seq;
 
@@ -22,12 +22,9 @@ public class PopupBase : UI_Base
     public event Action OnBeforeClose = null; //닫기 전 시점
     public event Action OnAfterClose = null; //닫기 완료 시점
 
-
     //팝업 초기화 필수 항목 정의
     private void Awake()
     {
-        //캔버스 설정 등 
-
         _raycaster = Utils.GetorAddComponent<GraphicRaycaster>(gameObject);
         BindCloseButton();
     }
@@ -65,7 +62,15 @@ public class PopupBase : UI_Base
         if(!enableAnimation) return;
 
         var obj = Utils.FindChild<Transform>(gameObject, "ImageBackground", false);
-        if(obj == null) return;
+        if(obj == null) 
+        {   
+            if(!isOpen)
+            {
+                OnAfterClose?.Invoke();
+                Destroy(gameObject);
+            }
+            return;
+        }
 
         SetInputEnabled(false);
 
@@ -116,6 +121,7 @@ public class PopupBase : UI_Base
             button.OnClick.AddListener(() =>
             {
                 //팝업 닫기
+                Managers.UI.ClosePopup();
             });
         }
     }

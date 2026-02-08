@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CoroutineManager
@@ -8,8 +7,7 @@ public class CoroutineManager
 
     private void Init()
     {
-        // TODO Managers.Instance 주입
-        // _mono = 
+        _mono = Managers.Instance;
     }
 
     public Coroutine StartCoroutine(IEnumerator coroutine)
