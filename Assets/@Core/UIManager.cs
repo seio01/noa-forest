@@ -5,21 +5,34 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public enum UI_Type
+{
+    Popup,
+    Toast,
+    Loading
+}
+
 public class UIManager
 {
-    private const string GlobalRoot = "@Gloabl_UI_Root";
-    private const string SceneRoot = "@Scene_UI_Root";
+    private const string GLOBAL_ROOT = "@Global_UI_Root";
+    private const string TOAST_ROOT = "@Toast_Root";
+    private const string LOADING_ROOT = "@Loading_Root";
+    private const string SCENE_ROOT = "@Scene_UI_Root";
 
-    private const int GlobalSortingOrder = 9999;
+    private const int TOAST_ORDER = 19999;
+    private const int LOADING_ORDER = 9999;
 
     private PopupController _popupController;
+    private ToastController _toastController;
+
+    private GameObject _toastRoot;
 
     public GameObject GetorCreateGlobalRoot()
     {
-        var globalRoot = GameObject.Find(GlobalRoot);
+        var globalRoot = GameObject.Find(GLOBAL_ROOT);
         if(globalRoot == null)
         {
-            globalRoot = new GameObject(GlobalRoot);
+            globalRoot = new GameObject(GLOBAL_ROOT);
             UnityEngine.Object.DontDestroyOnLoad(globalRoot);
         }
 
@@ -28,21 +41,44 @@ public class UIManager
 
     public GameObject GetorCreateSceneRoot()
     {
-        var sceneRoot = GameObject.Find(SceneRoot);
+        var sceneRoot = GameObject.Find(SCENE_ROOT);
         if(sceneRoot == null)
         {
-            sceneRoot = new GameObject(SceneRoot);
+            sceneRoot = new GameObject(SCENE_ROOT);
         }
 
         return sceneRoot;
+    }
+
+    public GameObject GetorCreateToastRoot()
+    {
+        if(_toastRoot)
+            return _toastRoot;
+        
+        var globalRoot = GetorCreateGlobalRoot();
+        var toastRoot = globalRoot.transform.Find(TOAST_ROOT);
+        if(toastRoot != null)
+        {
+            _toastRoot = toastRoot.gameObject;
+            return _toastRoot;
+        }
+
+        _toastRoot = new GameObject(TOAST_ROOT);
+        _toastRoot.transform.SetParent(globalRoot.transform, false);
+        SetCanvas(_toastRoot, UI_Type.Toast);
+
+        return _toastRoot;
     }
 
     public void Init()
     {
         _popupController = new PopupController();
         _popupController.InitBackgroundPopup();
+
+        _toastController = new ToastController();
     }
 
+    #region Popup Controls
     public void OpenPopup<T>(string name, Action<T> callback = null) where T : PopupBase
     {
         _popupController?.OpenPopup(name, callback);
@@ -62,8 +98,24 @@ public class UIManager
     {
         _popupController?.ClosePopupUntil<T>(popupName);
     }
+    #endregion
 
-    public void SetCanvas(GameObject go)
+    #region Toast Controls
+    public void ShowToast(string text)
+    {
+        if(_toastRoot == null)
+        {
+            GetorCreateToastRoot();
+        }
+
+        _toastController?.ShowToast(text);
+    }
+    #endregion
+
+    #region Loading Controls
+    #endregion
+
+    public void SetCanvas(GameObject go, UI_Type uiType = UI_Type.Popup)
     {
         Canvas canvas = Utils.GetorAddComponent<Canvas>(go);
         CanvasScaler scaler = Utils.GetorAddComponent<CanvasScaler>(go);
@@ -90,6 +142,15 @@ public class UIManager
         else
         {
             scaler.matchWidthOrHeight = 0;
+        }
+
+        if(uiType == UI_Type.Toast)
+        {
+            canvas.sortingOrder = TOAST_ORDER;
+        }
+        else if(uiType == UI_Type.Loading)
+        {
+            canvas.sortingOrder = LOADING_ORDER;
         }
     }
 

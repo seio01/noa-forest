@@ -78,7 +78,7 @@ public class PopupController
         if(BackgroundPopup)
             SetEnableBackgroundClick(enableBackgroundClick);
 
-        popupObj.transform.SetParent(Managers.UI.GetorCreateSceneRoot().transform);
+        popupObj.transform.SetParent(Managers.UI.GetorCreateSceneRoot().transform, false);
 
         callback?.Invoke(popupObj.GetComponent<T>());
         popupObjBase.OnOpen();
@@ -143,7 +143,6 @@ public class PopupController
             BackgroundPopup.sortingOrder = _currentOrder - 1;
     }
 
-    //백패널 관리
     public void InitBackgroundPopup()
     {
         if(BackgroundPopup != null || _isLoading) return;
@@ -171,7 +170,7 @@ public class PopupController
         var obj = UnityEngine.Object.Instantiate(popup);
         Managers.UI.SetCanvas(obj);
         BackgroundPopup = Utils.GetorAddComponent<Canvas>(obj);
-        obj.transform.SetParent(Managers.UI.GetorCreateSceneRoot().transform);
+        obj.transform.SetParent(Managers.UI.GetorCreateSceneRoot().transform, false);
         obj.transform.SetAsFirstSibling();
         BackgroundPopup.sortingOrder = _currentOrder -1;
         SetEnableBackgroundClick(false);
