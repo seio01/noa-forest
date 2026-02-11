@@ -1,30 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ToastController
 {
     public void ShowToast(string text)
     {
-        Managers.Coroutine.StartCoroutine(ShowToastRoutine(text));
+        Managers.Resource.LoadAsync<GameObject>("Prefabs/UI_Toast", (prefab) =>
+        {
+            if (prefab != null)
+            {
+                CreateToast(prefab, text);
+            }
+            else
+            {
+                Debug.LogError("[ToastController] UI_Toast prefab is null.");
+            }
+        });
     }
 
-    private IEnumerator ShowToastRoutine(string text)
+    private void CreateToast(GameObject prefab, string text)
     {
-        var req = Resources.LoadAsync<GameObject>("Prefabs/UI_Toast");
-
-        yield return req;
-
-        GameObject toast = req.asset as GameObject;
-        if(toast != null)
+        GameObject go = Object.Instantiate(prefab);
+        go.transform.SetParent(Managers.UI.GetorCreateToastRoot().transform, false);
+        var uiToast = go.GetComponent<UI_Toast>();
+        if(uiToast)
         {
-            var toastObj = Object.Instantiate(toast);
-            toastObj.transform.SetParent(Managers.UI.GetorCreateToastRoot().transform, false);
-            var uiToast = toastObj.GetComponent<UI_Toast>();
-            if(uiToast != null)
-            {
-                uiToast.Show(text);
-            }
+            uiToast.Show(text);
         }
     }
 }

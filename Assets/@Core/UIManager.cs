@@ -24,8 +24,10 @@ public class UIManager
 
     private PopupController _popupController;
     private ToastController _toastController;
+    private LoadingController _loadingController;
 
     private GameObject _toastRoot;
+    private GameObject _loadingRoot;
 
     public GameObject GetorCreateGlobalRoot()
     {
@@ -70,12 +72,33 @@ public class UIManager
         return _toastRoot;
     }
 
+    public GameObject GetorCreateLoadingRoot()
+    {
+        if(_loadingRoot)
+            return _loadingRoot;
+        
+        var globalRoot = GetorCreateGlobalRoot();
+        var loadingRoot = globalRoot.transform.Find(LOADING_ROOT);
+        if(loadingRoot != null)
+        {
+            _loadingRoot = loadingRoot.gameObject;
+            return _loadingRoot;
+        }
+
+        _loadingRoot = new GameObject(LOADING_ROOT);
+        _loadingRoot.transform.SetParent(globalRoot.transform, false);
+        SetCanvas(_loadingRoot, UI_Type.Loading);
+
+        return _loadingRoot;
+    }
+
     public void Init()
     {
         _popupController = new PopupController();
         _popupController.InitBackgroundPopup();
 
         _toastController = new ToastController();
+        _loadingController = new LoadingController();
     }
 
     #region Popup Controls
@@ -113,6 +136,20 @@ public class UIManager
     #endregion
 
     #region Loading Controls
+    public void OpenLoading<T>(Action<T> callback = null) where T : UI_Loading
+    {
+        if(_loadingRoot == null)
+        {
+            GetorCreateLoadingRoot();
+        }
+
+        _loadingController?.OpenLoading(callback);
+    }
+
+    public void CloseLoading()
+    {
+         _loadingController?.CloseLoading();
+    }
     #endregion
 
     public void SetCanvas(GameObject go, UI_Type uiType = UI_Type.Popup)

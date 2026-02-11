@@ -6,11 +6,10 @@ public class Managers : MonoBehaviour
     #region core
     private readonly CoroutineManager _coroutine = new CoroutineManager();
     private readonly UIManager _ui = new UIManager();
-    public static UIManager UI => Instance._ui;
+    private readonly ResourceManager _resource = new ResourceManager();
     public static CoroutineManager Coroutine => Instance._coroutine;
-
-    
-
+    public static UIManager UI => Instance._ui;
+    public static ResourceManager Resource => Instance._resource;
     #endregion
 
     #region content
