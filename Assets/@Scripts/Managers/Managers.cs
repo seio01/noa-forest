@@ -7,9 +7,11 @@ public class Managers : MonoBehaviour
     private readonly CoroutineManager _coroutine = new CoroutineManager();
     private readonly UIManager _ui = new UIManager();
     private readonly ResourceManager _resource = new ResourceManager();
+    private readonly SoundManager _sound = new SoundManager();
     public static CoroutineManager Coroutine => Instance._coroutine;
     public static UIManager UI => Instance._ui;
     public static ResourceManager Resource => Instance._resource;
+    public static SoundManager Sound => Instance._sound;
     #endregion
 
     #region content
@@ -75,6 +77,14 @@ public class Managers : MonoBehaviour
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        Sound.Destroy();
+    }
+        
     
-    
+
+
+
 }

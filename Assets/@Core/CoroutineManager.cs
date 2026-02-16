@@ -34,9 +34,14 @@ public class CoroutineManager
         yield return routine;
     }
 
-    public void StopCoroutine(IEnumerator coroutine)
+    public void StopCoroutine(Coroutine coroutine)
     {
         _mono?.StopCoroutine(coroutine);
+    }
+
+    public void StopAll()
+    {
+        _mono?.StopAllCoroutines();
     }
 }
 

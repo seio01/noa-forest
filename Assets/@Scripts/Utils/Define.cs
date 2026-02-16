@@ -31,4 +31,15 @@ public static class Define
         Sub_Olive1
     }
 
+    public enum AudioSourceType
+    {
+        Bgm,
+        Sfx,
+        LoopSfx
+    }
+
+    public enum AudioClip
+    {
+        
+    }
 }
